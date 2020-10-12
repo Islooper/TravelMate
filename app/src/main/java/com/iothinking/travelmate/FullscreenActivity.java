@@ -254,13 +254,11 @@ public class FullscreenActivity extends AppCompatActivity {
         Log.e("DISPLAY", "Width:"+point.x+",height:"+point.y);
 
         mVisible = true;
-        autoScrollTextView = findViewById(R.id.textView4);
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
         //启动公告滚动条
-        autoScrollTextView.init(getWindowManager());
-        autoScrollTextView.startScroll();
+
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,12 +289,13 @@ public class FullscreenActivity extends AppCompatActivity {
         // 获取当前时间
         SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String endTime = dff.format(new Date());
-        Log.e("day1" , endTime);
 
         // 获取当前游客
         HttpUtils.getStatusPark("1" , startTime , endTime);
 
         // TODO 获取停车场人数
+
+
 
     }
 

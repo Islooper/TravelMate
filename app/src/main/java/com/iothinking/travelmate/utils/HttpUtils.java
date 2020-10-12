@@ -1,5 +1,7 @@
 package com.iothinking.travelmate.utils;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -19,7 +21,7 @@ public class HttpUtils {
      * @param status：0-未使用，1-使用中，2-已使用
      */
     public static void getStatusPark(String status , String startTime , String endTime){
-        OkHttpUtils.get().url(Url.URL_DEV + "placeAndTypeSelectSensorData.do")
+        OkHttpUtils.get().url(Url.URL_DEV + "ticket/timeGetTicketOrder.do")
                 .addParams("startTime", startTime)
                 .addParams("endTime", endTime)
                 .addParams("usedStatus", status)
@@ -33,9 +35,12 @@ public class HttpUtils {
                     @Override
                     public void onResponse(String response)
                     {
+                        Log.e("back data : ", response);
                         JSONObject data = JSONObject.parseObject(response);
                         int code = data.getInteger("resultCode");
                         if (code == 0) {
+                            // TODO 计算人数 包含正在游玩人数 和 当天累计游玩人数
+
                             // 根据用途不同发送不同的广播
                             // 发送数据成功广播
                             BroadcastSender sender = new BroadcastSender();
@@ -49,6 +54,8 @@ public class HttpUtils {
 //                                    sender.send("sensors","refresh");
 //                                    break;
 //                            }
+
+
                         }
 
                     }
