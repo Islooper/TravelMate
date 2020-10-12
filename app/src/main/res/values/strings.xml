@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TravelMate</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="scenic_desc">"        旅商四季庭引入江南古典园林手法，打造中式庭园意境 ，融合美人靠、罩、亭、观景台、屏风、门廊、假山、喷泉等元素，组成庭内的兰芳甸、倚梅园、菊花台、听竹苑四大景观，打造成“四君子”庭园。让人在四季可以领略到不同的风景。整个庭院地方不大，但漫步院中时，不同角度看到的景观不同，有移步换景的效果。当微风拂面，暗香袭来，加上眼前雅致的风景，你会爱上这个古色古香的庭院，一杯茶，一本书，在这里，你可以静静的度过一整天。"</string>
+</resources>
