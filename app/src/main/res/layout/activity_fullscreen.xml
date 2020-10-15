@@ -99,25 +99,15 @@
                     android:textColor="#fff"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="扫码自助购票"
+                    android:text="扫码下载自助导游app"
                     android:layout_width="match_parent"
                     android:layout_height="20sp">
 
                 </TextView>
 
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="10sp"
-                    android:textColor="#fff"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="请使用微信/支付宝付款"
-                    android:layout_width="match_parent"
-                    android:layout_height="20sp">
-
-                </TextView>
 
                 <LinearLayout
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -203,6 +193,7 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_totaling"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -236,13 +227,14 @@
                         android:textStyle="bold"
                         android:textSize="15sp"
                         android:textColor="#fff"
-                        android:text="购票次数"
+                        android:text="累计游玩人数"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_totaled"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -284,6 +276,7 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_park"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -363,6 +356,7 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_tem"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -396,13 +390,14 @@
                         android:textStyle="bold"
                         android:textSize="15sp"
                         android:textColor="#fff"
-                        android:text="风力"
+                        android:text="风速"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_fv"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -437,18 +432,19 @@
                         android:textStyle="bold"
                         android:textSize="15sp"
                         android:textColor="#fff"
-                        android:text="空气质量"
+                        android:text="噪音"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     </TextView>
 
                     <TextView
+                        android:id="@+id/tv_noise"
                         android:layout_weight="2"
                         android:textStyle="bold"
                         android:textSize="15sp"
                         android:textColor="#fff"
-                        android:text="好"
+                        android:text="无"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 

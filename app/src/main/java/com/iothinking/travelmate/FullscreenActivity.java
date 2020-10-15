@@ -12,11 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
@@ -24,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.iothinking.travelmate.utils.HttpUtils;
@@ -61,6 +66,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     AutoScrollTextView autoScrollTextView;
+
+    TextView totaled , totaling , parkTv , temTv , fvTv , noiseTv;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -256,7 +263,12 @@ public class FullscreenActivity extends AppCompatActivity {
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
-
+        totaled = findViewById(R.id.tv_totaled);
+        totaling = findViewById(R.id.tv_totaling);
+        parkTv = findViewById(R.id.tv_park);
+        temTv = findViewById(R.id.tv_tem);
+        fvTv = findViewById(R.id.tv_fv);
+        noiseTv = findViewById(R.id.tv_noise);
         //启动公告滚动条
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -273,6 +285,14 @@ public class FullscreenActivity extends AppCompatActivity {
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         initMedia();
+
+
+        // 广播接受
+        mBroadcastReceiver = new MyBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BROADCAST_ACTION);
+        registerReceiver(mBroadcastReceiver, intentFilter);
+
 
         // 获取入园情况
         getTheEnterPark();
@@ -293,10 +313,20 @@ public class FullscreenActivity extends AppCompatActivity {
         // 获取当前游客
         HttpUtils.getStatusPark("1" , startTime , endTime);
 
-        // TODO 获取停车场人数
+        // 获取累计游客
+        HttpUtils.getStatusPark("2" , startTime , endTime);
 
+        // 获取剩余停车位
+        HttpUtils.readParkSpace();
 
+        // 获取温度
+        HttpUtils.getSensorData("001" , "8");
 
+        // 获取风速
+        HttpUtils.getSensorData("001" , "52");
+
+        // 获取噪声
+        HttpUtils.getSensorData("001" , "17");
     }
 
     @Override
@@ -358,4 +388,57 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+
+
+    /**
+     * 广播接受类
+     */
+
+    class MyBroadcastReceiver extends BroadcastReceiver {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String value = intent.getStringExtra("countsing");
+
+            if (value != null && !value.equals("")){
+                totaling.setText(value+"人次");
+            }
+
+            String valued = intent.getStringExtra("countsed");
+            if (valued != null && !valued.equals("")){
+                totaled.setText(valued+"人次");
+            }
+
+            String park = intent.getStringExtra("park");
+            if (park != null && !park.equals("")){
+                parkTv.setText(park+"个");
+            }
+
+            // 温度
+            String tem = intent.getStringExtra("tem");
+            if (tem != null && !tem.equals("")){
+                String[] temArr = tem.split(",");
+                temTv.setText(temArr[0]+"摄氏度");
+            }
+
+            // 风速
+            String fv = intent.getStringExtra("fv");
+            if (fv != null && !fv.equals("")){
+                fvTv.setText(fv);
+            }
+
+            // 噪音
+            String noise = intent.getStringExtra("noise");
+            if (noise != null && !noise.equals("")){
+                if (noise.equals("1")){
+                    noiseTv.setText("噪音一般");
+                }else {
+                    noiseTv.setText("无噪音");
+                }
+            }
+        }
+
+    }
+
 }
